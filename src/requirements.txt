@@ -1,0 +1,6 @@
+torch>=2.3.0
+transformers>=4.42.0
+accelerate>=0.31.0
+pyyaml>=6.0
+sentencepiece>=0.2.0
+protobuf>=3.20.3

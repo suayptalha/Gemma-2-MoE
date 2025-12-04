@@ -1,0 +1,77 @@
+# Configuration for building a Domain-Specialized Gemma-2-MoE
+# This config demonstrates splitting the model into 4 experts based on capabilities:
+# 1. Reasoning/Logic
+# 2. Coding/Technical
+# 3. Creative/Literary
+# 4. Math/Science
+
+# Base model for architecture and shared layers
+base_model: "google/gemma-2-9b-it"
+
+# Precision (bfloat16 is recommended for Gemma 2)
+dtype: "bfloat16"
+
+# MoE Settings
+num_experts_per_tok: 2 # Top-2 routing
+
+# Expert Definitions
+# Ideally, 'source_model' should be different fine-tunes (e.g., CodeGemma for the coding expert).
+# For this example, we use the base model for all, relying on the router to direct prompts
+# to the specific expert slot that we will conceptually "dedicate" to that task.
+experts:
+  # Expert 0: The "Reasoning Engine"
+  # Focus: Step-by-step thinking, logic, analysis.
+  - name: "Analytical Expert"
+    source_model: "google/gemma-2-9b-it"
+    positive_prompts:
+      - "Think step by step and explain your reasoning."
+      - "Analyze the cause and effect of this event."
+      - "Provide a logical argument for..."
+      - "Critique this text for logical fallacies."
+    negative_prompts:
+      - "Write a fantasy poem."
+      - "Tell me a joke."
+      - "Write a Python script."
+
+  # Expert 1: The "Developer"
+  # Focus: Code generation, debugging, technical documentation.
+  - name: "Coding Expert"
+    source_model: "google/gemma-2-9b-it" # Ideally replace with a coding-specific model
+    positive_prompts:
+      - "Write a Python function to..."
+      - "Debug this C++ code snippet."
+      - "Explain how the Dijkstra algorithm works."
+      - "Generate a SQL query for..."
+      - "```python"
+    negative_prompts:
+      - "Write a romantic letter."
+      - "Explain the history of Rome."
+      - "Solve x^2 + 2x = 0"
+
+  # Expert 2: The "Writer"
+  # Focus: Storytelling, roleplay, poetry, creative style.
+  - name: "Creative Expert"
+    source_model: "google/gemma-2-9b-it" 
+    positive_prompts:
+      - "Write a short story about a space traveler."
+      - "Compose a poem in the style of Shakespeare."
+      - "Describe a vivid sunset over the ocean."
+      - "Write a dialogue between two characters."
+    negative_prompts:
+      - "Calculate the derivative."
+      - "Fix this segmentation fault."
+      - "Provide a factual summary."
+
+  # Expert 3: The "Scientist"
+  # Focus: Math, Physics, Chemistry, hard data.
+  - name: "STEM Expert"
+    source_model: "google/gemma-2-9b-it" # Ideally replace with a Math-specific model
+    positive_prompts:
+      - "Solve for x in the following equation."
+      - "Calculate the molar mass of..."
+      - "Explain the theory of relativity."
+      - "Perform a statistical analysis."
+    negative_prompts:
+      - "Write a blog post about fashion."
+      - "How do I make friends?"
+      - "Write a fictional story."
