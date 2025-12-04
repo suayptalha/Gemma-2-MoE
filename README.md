@@ -34,8 +34,8 @@
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/Gemma2MoE.git
-    cd Gemma2MoE
+    git clone https://github.com/suayptalha/Gemma-2-MoE.git
+    cd Gemma-2-MoE
     ```
 
 2.  **Install dependencies:**
