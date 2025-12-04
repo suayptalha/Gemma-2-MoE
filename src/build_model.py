@@ -234,11 +234,9 @@ def build_model_from_yaml(config_path, output_dir):
         gc.collect()
         torch.cuda.empty_cache()
 
-    tokenizer = AutoTokenizer.from_pretrained(base_model_id)
     # Save
     print(f"\nSaving finalized model to {output_dir}...")
     moe_model.save_pretrained(output_dir)
-    tokenizer.save_pretrained(output_dir)
     print("Build Complete! Model is ready for inference.")
 
 if __name__ == "__main__":
