@@ -102,25 +102,32 @@ python src/build_model.py \
 You can load the built model using the provided custom classes. Ensure the `src` folder is in your Python path or copy the modeling files to your project.
 
 ```python
+import sys
+import os
+
+# Add the 'src' directory to the python path
+sys.path.append(os.path.abspath("./src"))
+
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-# If loading from the built directory, ensure custom code is trusted 
+# If loading from the built directory, ensure custom code is trusted
 # or import the classes directly from src/
 
-from src.configuration_gemma2moe import Gemma2MoeConfig
-from src.modeling_gemma2moe import Gemma2MoeForCausalLM
+from configuration_gemma2moe import Gemma2MoeConfig
+from modeling_gemma2moe import Gemma2MoeForCausalLM
 
 # Register the classes (Optional if loading directly)
 # AutoConfig.register("gemma2moe", Gemma2MoeConfig)
 # AutoModelForCausalLM.register(Gemma2MoeConfig, Gemma2MoeForCausalLM)
 
+base_model = "hf/repo"
 model_path = "./my_gemma_moe"
 
-tokenizer = AutoTokenizer.from_pretrained(model_path)
+tokenizer = AutoTokenizer.from_pretrained(base_model)
 model = Gemma2MoeForCausalLM.from_pretrained(
-    model_path, 
-    device_map="auto", 
+    model_path,
+    device_map="auto",
     torch_dtype=torch.bfloat16
 )
 
