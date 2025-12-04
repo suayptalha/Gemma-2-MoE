@@ -33,7 +33,7 @@ from transformers.utils import (
 )
 from transformers.modeling_attn_mask_utils import _prepare_4d_causal_attention_mask
 
-from .configuration_gemma2moe import Gemma2MoeConfig
+from configuration_gemma2moe import Gemma2MoeConfig
 
 logger = logging.get_logger(__name__)
 
