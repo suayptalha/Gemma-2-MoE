@@ -2,7 +2,7 @@
 
 **Gemma2MoE** is a toolkit for transforming dense **Gemma 2** checkpoints into a **Sparse Mixture of Experts (MoE)** architecture. It leverages **Semantic Routing**, a method that determines expert specialization from the very beginning by analyzing the semantic embeddings of user-defined positive and negative prompts. By constructing expert-specific routing vectors in the model’s latent space, each expert becomes naturally aligned with its intended domain (e.g., Coding, STEM, Logic, Creative Writing), enabling domain-aware behavior even before any fine-tuning is performed.
 
-## 🚀 Key Features
+## Key Features
 
   * **Native Gemma 2 Support:** Fully preserves Gemma 2 architectural innovations, including **Logit Soft-Capping**, **Sliding Window Attention**, and **Query Pre-Attention Scaling**.
   * **Semantic Router Initialization:** Initializes the MoE gating mechanism using the semantic vector space of the base model.
